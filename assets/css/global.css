@@ -6,3 +6,6 @@
 h4,p{
     padding: 5px 10px;
 }
+p img{
+    width: 100%;
+}
