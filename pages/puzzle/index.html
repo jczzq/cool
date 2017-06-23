@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        
+        img {
+            vertical-align: top;
+            width: 100%;
+            border: 0px;
+        }
+        
+        #content {
+            width: 100%;
+            border: 0px;
+        }
+        
+        .main {
+            background: url(../../assets/imgs/1.jpg) no-repeat;
+        }
+        
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-family: "microsoft yahei"
+        }
+        
+        ul.play {
+            width: 314px;
+            margin: 0 auto;
+        }
+        
+        ul.play li {
+            width: 100px;
+            height: 100px;
+            float: left;
+            border: 1px solid #cccccc;
+            margin: 1px;
+            cursor: pointer;
+            -moz-background-size: 300px 300px;
+            background-size: 300px 300px;
+            background-repeat: no-repeat;
+        }
+        #baguetteBox-overlay .full-image figcaption {
+            text-align: left !important;
+        }
+        .sub-box {
+            text-align: center;
+        }
+        .sub-box img{
+            margin-top: 10vw;
+            width: 60vw;
+            height: 60vw;
+        }
+    </style>
+    <script src="js/splitImg.js"></script>
+    <script>
+        window.onload = function () {
+            var M = 3;
+            var nav = document.getElementById("play");
+            var urlimg = "../../assets/imgs/rec.png";
+            var bg = [];
+
+            //初始化游戏界面
+            var _J = installshuffleJ(M);
+            for (var i = 0, j = 1; j <= M; j++) {
+                for (var k = 1; k <= M; k++) {
+                    bg[i] = -(k - 1) * 100 + "px " + -(j - 1) * 100 + "px";
+                    i++;
+                }
+            }
+
+            for (var i = 0; i < _J.length; i++) {
+                var li = document.createElement("li");
+                nav.appendChild(li);
+                li.style.backgroundImage = "url(" + urlimg + ")";
+                li.style.backgroundPosition = bg[_J[i]];
+                li.className = "li" + i;
+                li.id = "li" + _J[i];
+            }
+            document.getElementById("li0").style.backgroundImage="none";
+            //初始化游戏界面结束
+
+            //点击移动
+            var lis = document.getElementsByTagName("li");
+            for (var i = 0; i < lis.length; i++) {
+                a = function (i) {
+                    lis[i].onclick = function () {
+                        if (canmove(lis[i])) {
+                            var zero = document.getElementById("li0");
+                            var x = lis[i].getAttribute("id");
+                            var bg = lis[i].style.backgroundPosition;
+                            zero.style.backgroundImage = "url(" + urlimg + ")";
+                            zero.style.backgroundPosition = bg;
+                            zero.id = x;
+                            lis[i].style.backgroundImage = "none";
+                            lis[i].setAttribute("id", "li0");
+                        }
+                    }
+                }
+                a(i);
+            }
+        }
+    </script>
+</head>
+
+
+<body>
+    <div class="main">
+        <ul class="play" id="play">
+        </ul>
+    </div>
+    <div class="sub-box">
+        <img src="../../assets/imgs/rec.png" alt="">
+    </div>
+</body>
+</html>
