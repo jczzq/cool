@@ -76,10 +76,10 @@
             <span> 登 录 </span>
         </div>
     </div>
-    <script type="text/javascript" src="js/ThreeWebGL.js"></script>
-    <script type="text/javascript" src="js/ThreeExtras.js"></script>
-    <script type="text/javascript" src="js/Detector.js"></script>
-    <script type="text/javascript" src="js/RequestAnimationFrame.js"></script>
+    <script type="text/javascript" src="./js/ThreeWebGL.js"></script>
+    <script type="text/javascript" src="./js/ThreeExtras.js"></script>
+    <script type="text/javascript" src="./js/Detector.js"></script>
+    <script type="text/javascript" src="./js/RequestAnimationFrame.js"></script>
     <script id="vs" type="x-shader/x-vertex">
         varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 ); }
     </script>
@@ -128,11 +128,8 @@
             material = new THREE.MeshShaderMaterial({
                 uniforms: {
                     "map": { type: "t", value: 2, texture: texture },
-
                     "fogColor": { type: "c", value: fog.color },
-
                     "fogNear": { type: "f", value: fog.near },
-
                     "fogFar": { type: "f", value: fog.far },
                 },
                 vertexShader: document.getElementById('vs').textContent,
@@ -149,77 +146,49 @@
                 GeometryUtils.merge(geometry, plane);
             }
             mesh = new THREE.Mesh(geometry, material);
-
             scene.addObject(mesh);
-
-
 
             mesh = new THREE.Mesh(geometry, material);
-
             mesh.position.z = - 8000;
-
             scene.addObject(mesh);
 
-
-
             renderer = new THREE.WebGLRenderer({ antialias: false });
-
             renderer.setSize(window.innerWidth, window.innerHeight);
-
             container.appendChild(renderer.domElement);
 
-
-
             document.addEventListener('mousemove', onDocumentMouseMove, false);
-
             window.addEventListener('resize', onWindowResize, false);
-
-
-
         }
 
 
 
         function onDocumentMouseMove(event) {
             mouseX = (event.clientX - windowHalfX) * 0.25;
-
             mouseY = (event.clientY - windowHalfY) * 0.15;
         }
         function onWindowResize(event) {
             camera.aspect = window.innerWidth / window.innerHeight;
-
             camera.updateProjectionMatrix();
-
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
 
 
         function animate() {
-
             requestAnimationFrame(animate);
-
             render();
         }
         function render() {
             position = ((new Date().getTime() - start_time) * 0.03) % 8000;
             camera.position.x += (mouseX - camera.target.position.x) * 0.01;
-
             camera.position.y += (- mouseY - camera.target.position.y) * 0.01;
-
             camera.position.z = - position + 8000;
 
-
-
             camera.target.position.x = camera.position.x;
-
             camera.target.position.y = camera.position.y;
-
             camera.target.position.z = camera.position.z - 1000;
             renderer.render(scene, camera);
         }
     </script>
-
 </body>
-
 </html>

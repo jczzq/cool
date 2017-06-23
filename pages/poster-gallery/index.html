@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        
+        img {
+            vertical-align: top;
+            width: 100%;
+            border: 0px;
+        }
+        
+        #content {
+            width: 100%;
+            border: 0px;
+        }
+        
+        .main {
+            background: url(../../assets/imgs/1.jpg) no-repeat;
+        }
+        
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-family: "microsoft yahei"
+        }
+        
+        ul.play {
+            width: 314px;
+            margin: 0 auto;
+        }
+        
+        ul.play li {
+            width: 100px;
+            height: 100px;
+            float: left;
+            border: 1px solid #cccccc;
+            margin: 1px;
+            cursor: pointer;
+            -moz-background-size: 300px 300px;
+            background-size: 300px 300px;
+            background-repeat: no-repeat;
+        }
+        #baguetteBox-overlay .full-image figcaption {
+            text-align: left !important;
+        }
+    </style>
+    <link rel="stylesheet" href="./css/baguetteBox.css">
+</head>
+
+<script src="js/splitImg.js"></script>
+
+<script>
+    window.onload = function () {
+        var M = 3;
+        var nav = document.getElementById("play");
+        var urlimg = "images/sakamodo-rec.png";
+        var bg = [];
+
+        //初始化游戏界面
+        var _J = installshuffleJ(M);
+        for (var i = 0, j = 1; j <= M; j++) {
+            for (var k = 1; k <= M; k++) {
+                bg[i] = -(k - 1) * 100 + "px " + -(j - 1) * 100 + "px";
+                i++;
+            }
+        }
+
+        for (var i = 0; i < _J.length; i++) {
+            var li = document.createElement("li");
+            nav.appendChild(li);
+            li.style.backgroundImage = "url(" + urlimg + ")";
+            li.style.backgroundPosition = bg[_J[i]];
+            li.className = "li" + i;
+            li.id = "li" + _J[i];
+        }
+        // document.getElementById("li0").style.backgroundImage="none";
+        //初始化游戏界面结束
+
+        //点击移动
+        var lis = document.getElementsByTagName("li");
+        for (var i = 0; i < lis.length; i++) {
+            a = function (i) {
+                lis[i].onclick = function () {
+                    if (canmove(lis[i])) {
+                        var zero = document.getElementById("li0");
+                        var x = lis[i].getAttribute("id");
+                        var bg = lis[i].style.backgroundPosition;
+                        zero.style.backgroundImage = "url(" + urlimg + ")";
+                        zero.style.backgroundPosition = bg;
+                        zero.id = x;
+                        lis[i].style.backgroundImage = "none";
+                        lis[i].setAttribute("id", "li0");
+                    }
+                }
+            }
+            a(i);
+        }
+    }
+</script>
+<body>
+    <div class="main">
+        <ul class="play" id="play">
+        </ul>
+    </div>
+    <div>
+        <div class="gallery">
+            <a href="./images/vol16.png" data-caption="美业O2O,到线下的转换，而形到线下的转换，而形美业O2O,就是把传统的美业服务完成线上到线下的转换，而形O2O,就是把传统的美业服务完成线上到线下的转换，而形成的一种全新的商业模式，现在做的比如：河狸家、美道家、妈咪快美等，都是从线上到线下的美容服务">
+                <img src="./images/vol16.png" alt="vol16">
+            </a>
+            <a href="./images/itach.png" data-caption="itach">
+                <img src="./images/itach.png" alt="itach">
+            </a>
+            <a href="./images/breathe.gif" data-caption="itach">
+                <img src="./images/breathe.gif" alt="breathe">
+            </a>
+        </div>
+    </div>
+</body>
+<script src="./js/baguetteBox.js" async></script>
+<script>
+    window.onload = function() {
+        baguetteBox.run('.gallery', {
+            fullScreen: false,
+            titleTag: true,
+            animation: 'slideIn',
+            noScrollbars: true,
+            buttons: true
+        });
+    };
+</script>
+</html>
