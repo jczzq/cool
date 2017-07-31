@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" type="image/ico" href=",/images/favicon.ico">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>pop-wave</title>
+    <style>
+        /* Header */
+        .large-header {
+            position: relative;
+            width: 100%;
+            background: #333;
+            overflow: hidden;
+            background-image: url(./images/bg5.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            z-index: 2;
+        }
+        .main-title {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            color: #f9f1e9;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate3d(-50%,-50%,0);
+            transform: translate3d(-50%,-50%,0);
+        }
+
+        .demo-2 .main-title {
+            font-family: 'Clicker Script', cursive;
+            font-weight: normal;
+            font-size: 8em;
+            padding-left: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+        .main-title .thin {
+            font-weight: 200;
+        }
+
+        @media only screen and (max-width : 768px) {
+            .demo-2 .main-title {
+                font-size: 4em;
+            }
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "Microsoft Yahei Light", "Hiragino Sans GB", "微软雅黑", sans-serif;
+            min-height: 100vh;
+        }
+        a {
+            color: white;
+        }
+        
+        .notice-box {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: 0 auto;
+            padding: 30px;
+            font-size: 18px;
+            background-color: rgba(0, 0, 0, .3);
+            box-sizing: border-box;
+            z-index: 3;
+        }
+        .notice-box .title {
+            text-align: center;
+            line-height: 80px;
+            color: white;
+            font-weight: 200;
+        }
+        .notice-box .user {
+            line-height: 60px;
+        }
+        .notice-box .content {
+            text-indent: 2em;
+            line-height: 35px;
+            word-break: break-all;
+        }
+        .notice-box .content .domain {
+            text-align: center;
+        }
+        .notice-box p {
+            color: white;
+            font-weight: 200;
+        }
+        .notice-box .telephone {
+            text-align: right; 
+            font-size: 14px;
+            line-height: 30px;
+            color: #BABABA;
+        }
+        .notice-box .telephone a {
+            color: #BABABA;
+            text-decoration: none;
+        }
+        @media screen and (max-width: 560px) {
+            .notice-box {
+                padding: 15px;
+                width: 260px;
+                height: 380px;
+                margin-left: -130px;
+                margin-top: -190px;
+                font-size: 14px;
+            }
+            .notice-box .title {
+                line-height: 60px;
+            }
+            .notice-box .user {
+                line-height: 40px;
+            }
+            .notice-box .content {
+                line-height: 27px;
+            }
+            .notice-box .telephone {
+                line-height: 30px;
+                font-size: 12px;
+            }
+        }
+        @media screen and (min-width: 561px) {
+            .notice-box {
+                width: 540px;
+                height: 440px;
+                margin-left: -270px;
+                margin-top: -220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container demo-2">
+        <div class="content">
+            <div id="large-header" class="large-header">
+                <canvas id="demo-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="notice-box">
+        <h2 class="title">升级通知</h2>
+        <p class="user">尊敬的美问云客户：</p>
+        <p class="content">
+            我们的产品已经进行了升级优化，目前iPad版本服务暂停使用.
+            请您使用谷歌浏览器访问：<a class="domain" href="https://saas.mei1.com">saas.mei1.com</a> 
+            新版本功能更强大，操作更简便。
+        </p>
+        <br>
+        <p class="notice">感谢您对我们的关注！</p>
+        <br>
+        <p style="text-align: right">美问信息</p>
+        <p class="telephone">客服电话：<a href="tel:13761313132">137 6131 3132</a></p>
+    </div>
+    <script>
+        (function() {
+            var lastTime = 0;
+            var vendors = ['ms', 'moz', 'webkit', 'o'];
+            for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+                window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+                window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+                    || window[vendors[x]+'CancelRequestAnimationFrame'];
+            }
+
+            if (!window.requestAnimationFrame)
+                window.requestAnimationFrame = function(callback, element) {
+                    var currTime = new Date().getTime();
+                    var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                    var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                        timeToCall);
+                    lastTime = currTime + timeToCall;
+                    return id;
+                };
+
+            if (!window.cancelAnimationFrame)
+                window.cancelAnimationFrame = function(id) {
+                    clearTimeout(id);
+                };
+        }());
+    </script>
+
+    <script>
+        (function() {
+            var width, height, largeHeader, canvas, ctx, circles, target, animateHeader = true;
+
+            initHeader();
+            addListeners();
+
+            function initHeader() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                target = {x: 0, y: height};
+
+                largeHeader = document.getElementById('large-header');
+                largeHeader.style.height = height+'px';
+
+                canvas = document.getElementById('demo-canvas');
+                canvas.width = width;
+                canvas.height = height;
+                ctx = canvas.getContext('2d');
+
+                circles = [];
+                for(var x = 0; x < width*0.5; x++) {
+                    var c = new Circle();
+                    circles.push(c);
+                }
+                animate();
+            }
+
+            function addListeners() {
+                window.addEventListener('scroll', scrollCheck);
+                window.addEventListener('resize', resize);
+            }
+
+            function scrollCheck() {
+                if(document.body.scrollTop > height) animateHeader = false;
+                else animateHeader = true;
+            }
+
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                largeHeader.style.height = height+'px';
+                canvas.width = width;
+                canvas.height = height;
+            }
+
+            function animate() {
+                if(animateHeader) {
+                    ctx.clearRect(0,0,width,height);
+                    for(var i in circles) {
+                        circles[i].draw();
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            function Circle() {
+                var _this = this;
+
+                (function() {
+                    _this.pos = {};
+                    init();
+                })();
+
+                function init() {
+                    _this.pos.x = Math.random()*width;
+                    _this.pos.y = height+Math.random()*100;
+                    _this.alpha = 0.1+Math.random()*0.3;
+                    _this.scale = 0.1+Math.random()*0.3;
+                    _this.velocity = Math.random();
+                }
+
+                this.draw = function() {
+                    if(_this.alpha <= 0) {
+                        init();
+                    }
+                    _this.pos.y -= _this.velocity;
+                    _this.alpha -= 0.0005;
+                    ctx.beginPath();
+                    ctx.arc(_this.pos.x, _this.pos.y, _this.scale*10, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = 'rgba(255,255,255,'+ _this.alpha+')';
+                    ctx.fill();
+                };
+            }
+
+        })();
+    </script>
+</body>
+</html>
