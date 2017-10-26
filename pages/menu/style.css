@@ -1,0 +1,20 @@
+	.Left { position:fixed; left:0; width:200px; z-index:1; float:left; height:100%;  overflow-x:hidden; 
+	background-color:#555; }
+	
+	/*.Left>.logo*/
+	.Left>.logo { cursor:pointer; width:200px;height:10%; background:url('/static/logo.png') no-repeat; background-size:contain;
+	 background-position:center; }
+	/*.Left>.menu*/
+	.Left>.menu{ overflow-y:auto; height:90%; width:212px; padding:0;margin:0; background-color:#262f40;  }
+	.Left>.menu>.tle{ width:100%;height:50px;padding:15px 10px;text-align:center; }
+	.Left>.menu>.tle>i{ font-size:18px;margin-right:0; color:#eee; }
+	.Left>.menu>.tle>span{height:20px;line-height:20px;font-size:16px; cursor:pointer; color:#95a0a6;  }
+	.Left>.menu>dl>dt.subMenu{height:40px;font-weight:100; background-color:#354155; color:#c1cbd8;
+	padding:10px 10px; line-height:20px;font-size:14px; text-align:left; cursor:pointer; }
+	.Left>.menu>dl>dt.subMenu>i{font-size:20px; margin-right:5px;color:#c1cbd8; }
+	.Left>.menu>dl>dd{display:none; height:36px;  padding:8px 10px 8px 25px; background-color:#262f40; color:#eee; line-height:20px;font-size:14px; text-align:left; }
+	.Left>.menu>dl>dd>a{color:#eee; font-size:12px;}
+	.Left>.menu>dl>dd:hover{background-color:#354155; cursor:pointer; color:#188af5;}
+	.Left>.menu>dl>dd:hover a{color:#c1cbd8;}
+
+	.linkActive a{ color:#c1cbd8 !important; }

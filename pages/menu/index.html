@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>edit(带图片上传)富文本编辑器</title>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+
+    <body>
+        <!--Left/Logo-->
+        <div class="logo"></div>
+        <!--Left/Logo-->
+
+        <!--Left/菜单-->
+        <div class="menu">
+            <!--标题-->
+            <div class="tle">
+                <i class="icon-home" ></i>
+                <span> 首页</span>
+            </div>
+            <dl>
+                <!--Left/Logo-->
+				<div class="logo"   v-link="{name:'home'}"></div>
+				<!--Left/Logo-->
+
+				<!--Left/菜单-->
+				<div class="menu">
+							<!--标题-->
+							<div class="tle">
+									<i class="icon-home" ></i>
+									<span v-link="{name:'home'}"> 首页</span>
+							</div>
+							<dl>
+									<!--Left/菜单/订单管理-->
+									<template v-for="item in SRMenus | level1">
+										<dt class="subMenu " @click="toggleMenu($event)">{{item.ModuleName}}<i class="icon-angle-right pull-right"></i></dt>
+
+											<dd v-for="subitem in SRMenus | level2 item.MenuID" :class="{'linkActive':($route.params.moduleID==subitem.ModuleID)}">
+													<a title="{{subitem.ModuleName}}" v-if="subitem.FileName == 'SmartQuery.dll'"  
+													v-link="{name:'stdQuery',params:{moduleID:subitem.ModuleID,moduleName:subitem.ModuleName}}" >
+															{{strByLen(subitem.ModuleName,10)}}
+													</a>
+													<a title="{{subitem.ModuleName}}" v-else  
+													v-link="{name:'stdModule',params:{moduleID:subitem.ModuleID,moduleName:subitem.ModuleName} }" >
+															{{strByLen(subitem.ModuleName,10)}}
+													</a>
+										</dd>
+									</template>
+
+							</dl>
+
+				</div>
+				<!--Left/菜单-->
+            </dl>
+        </div>
+        <!--Left/菜单-->
+    </body>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        new Vue({
+            data(){
+                return {
+                    //当前用户的菜单
+                    SystemRoleMenus:{},
+                }
+            },
+            //自定义过滤器
+            filters:{
+                //过滤一级菜单
+                level1(menus){
+                    return menus.filter(x=>{return x.MenuLevel==1})
+                },
+                //过滤二级菜单
+                level2(menus,menuID){
+                    return menus.filter(x=>{return x.UpMenuID==menuID})
+                }
+            },
+            computed:{
+                SRMenus(){
+                    if(this.SystemRoleMenus.dataList){
+                        return this.SystemRoleMenus.dataList
+                    }else{
+                        return []
+                    }
+                }
+            },
+            methods:{
+                //点击显示、隐藏二级菜单
+                toggleMenu(event){
+                    $(event.target).nextUntil("dt").slideToggle('fast');
+                },
+                //获取菜单信息
+                SRMenusInit(){
+                    let self=this;
+                    util.myAjax({
+                            url:self.idcUrl+"/StdQuery/StdQuery",
+                        dataType:"jsonp",
+                        async:true,
+                        data:{
+                            queryName:"SystemRoleMenus",
+                            SystemID:"01",
+                            SystemRoleID:"004",
+                            UserID:self.sessionUser.userId
+                        },
+                        success(data){
+                            if(data.isValid){
+                                self.SystemRoleMenus=data.data
+                            }
+                        }
+                    });
+                },
+                //按指定长度截取字符串
+                strByLen(str,len){
+                    return util.strByLen(str,len);
+                },
+            },
+            mounted(){
+                //加载菜单信息
+                this.SRMenusInit();
+            }
+        })
+    </script>
+</html>
