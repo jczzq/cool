@@ -4,74 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>jczzq's cool html~</title>
+    <title>jczzq - cool</title>
     <link rel="stylesheet" href="../assets/css/global.css">
 </head>
 <body>
-    <ul>
-        <li>
-            <h4>
-                <a href="./pages/edit/index.html">富文本编辑器</a>
-            </h4>
-            <p>
-                <img src="" alt="富文本编辑器">
-            </p>
-            
-        </li>
-        <li>
-            <h4>
-                <a href="./pages/menu/index.html">菜单布局</a>
-            </h4>
-            <p>
-                <img src="" alt="菜单布局">
-            </p>
-            
-        </li>
-        <li>
-            <h4>
-                <a href="./pages/3d-cloud/index.html">3D云在云端！</a>
-            </h4>
-            <p>
-                <img src="" alt="3D云在云端">
-            </p>
-            
-        </li>
-        <li>
-            <h4>
-                <a href="./pages/poster-gallery/index.html">海报画廊</a>
-            </h4>
-            <p>
-                <img src="" alt="海报画廊">
-            </p>
-            
-        </li>
-
-        <li>
-            <h4>
-                <a href="./pages/puzzle/index.html">拼图游戏</a>
-            </h4>
-            <p>
-                <img src="" alt="拼图游戏">
-            </p>
-        </li>
-
-        <li>
-            <h4>
-                <a href="./pages/pop-wave/index.html">气泡</a>
-            </h4>
-            <p>
-                <img src="" alt="气泡">
-            </p>
-        </li>
-
-        <li>
-            <h4>
-                <a href="./pages/particle/index.html">粒子按钮</a>
-            </h4>
-            <p>
-                <img src="" alt="粒子按钮">
-            </p>
-        </li>
-    </ul>
+    <div id="app">
+        <h2 class="title m-b">cool html</h2>
+        <ul class="main">
+            <li class="m-b hover bd-def" v-for="page in PAGE_LIST">
+                <p @click="location.href = page.url" class="cover-wrapper" :style="{ backgroundImage: `url(./assets/imgs/cover/${page.cover})`}"></p>
+                <h4>
+                    <a :href="page.url">{{ page.name }}</a>
+                </h4>
+            </li>
+        </ul>
+        <footer class="footer">
+            <p> <i></i> 备案号：鄂ICP备17027147号 </p>
+            <p> ©2018 <a href="http://jczzq.com">jczzq.com</a> </p>
+        </footer>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <script src="./assets/js/app.js"></script>
 </body>
 </html>

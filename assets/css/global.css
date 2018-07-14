@@ -3,9 +3,65 @@
     padding:0;
     font-family: 'Microsoft Yahei';
 }
-h4,p{
-    padding: 5px 10px;
+a {
+    color: #666;
+    text-decoration: none;
 }
-p img{
-    width: 100%;
+ul,
+li {
+    list-style: none;
+}
+.title {
+    padding: 16px;
+    font-size: 36px;
+    border-bottom: 3px solid #eee;
+}
+.main {
+    margin: 0 16px;
+}
+.m-b {
+    margin-bottom: 20px;
+}
+h4{
+    padding: 8px;
+}
+.hover:hover {
+    transition: box-shadow .3s ease-out;
+    border-color: ddd;
+    box-shadow: 0 0 24px 1px #ccc;
+}
+.bd-def {
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+.cover-wrapper {
+    cursor: pointer;
+    height: 300px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+footer.footer {
+    font-size: 14px;
+    padding: 16px 20px;
+    height: 200px;
+    background-color: #f5f5f5;
+    text-align: center;
+    color: #999;
+}
+footer.footer i {
+    display: inline-block;
+    width: 14px;
+    height: 16px;
+    background: url(../imgs/icon-police.png) 0 0 no-repeat;
+    vertical-align: middle;
+}
+footer.footer p {
+    line-height: 32px;
+}
+footer.footer a {
+    font-size: 14px;
+    color: #999;
 }
