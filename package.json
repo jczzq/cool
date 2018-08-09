@@ -1,0 +1,21 @@
+{
+  "name": "node-demo",
+  "version": "1.0.0",
+  "description": "node demos. websocket, webpack...",
+  "main": "app.js",
+  "scripts": {
+    "express-socket.io": "nodemon ./websocket/express-socket.io/index"
+  },
+  "keywords": [
+    "websocket",
+    "webpack"
+  ],
+  "author": "jczzq",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1",
+    "webpack": "^4.16.5",
+    "ws": "^6.0.0"
+  }
+}

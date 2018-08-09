@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>聊天室</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/nomalstyle.css">
+    <script src="/js/socket.io.js"></script>
+    <style>
+        body {
+            font-size: 16px;
+        }
+        .name {
+            font-weight: bold;
+        }
+        .msg-box {
+            transition: .5s height;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <main id="app" class="p-4">
+        <div class="m-b-4">
+            <input type="text" placeholder="输入用户名" @keyup.enter="login" :disabled="user.isLogin" v-model="user.name" class="m-r-4">
+            <button :disabled="user.isLogin" @click="login()">进入聊天室</button>
+        </div>
+        <ul class="msg-box p-4 m-b-4" ref="msgBox">
+            <li v-for="item in messages" class="m-b-3">
+                <p v-if="item.type === 'LOGIN'" class="text-center color-placeholder">
+                    <span class="name">{{ item.name }}</span>进入聊天室
+                </p>
+                <p v-if="item.type === 'LOGOUT'" class="text-center color-placeholder">
+                    <span class="name">{{ item.name }}</span>离开聊天室
+                </p>
+                <p v-if="item.type === 'MESSAGE'">
+                    <span class="name">{{ item.name }}</span>：
+                    {{ item.message }}
+                </p>
+            </li>
+        </ul>
+        <div class="m-b-4" v-if="user.isLogin">
+            <input type="text" v-model="message" @keyup.enter="send()" class="m-r-4">
+            <button @click="send()" class="m-r-4">发送消息</button>
+            <button @click="logout()">离开</button>
+        </div>
+    </main>
+    <script src="/js/vue.min.2.5.15.js"></script>
+    <script>
+        Vue.devtool = true;
+        new Vue({
+            el: '#app',
+            data: {
+                SOCKET: null,
+                user: {
+                    isLogin: false,
+                    id: Date.now(),
+                    name: null
+                },
+                users: [],
+                message: '',
+                messages: []
+            },
+            mounted() {
+
+            },
+            methods: {
+                login: function () {
+                    var _self = this;
+                    if (!this.user.name) return;
+                    document.title = `${this.user.name} - 聊天室`;
+                    this.SOCKET = io.connect('http://localhost:3000');
+                    // 进入聊天室
+                    this.SOCKET.on('login', function (msg) {
+                        _self.addMsg(msg, 'LOGIN');
+                    });
+                    // 离开聊天室
+                    this.SOCKET.on('logout', function (msg) {
+                        console.log('离开聊天室', msg);
+                        _self.addMsg(msg, 'LOGOUT');
+                    });
+                    // 获取消息
+                    this.SOCKET.on('message', function (msg) {
+                        console.log('获取消息', msg);
+                        _self.addMsg(msg, 'MESSAGE');
+                    });
+                    const msg = { id: this.user.id, name: this.user.name };
+                    this.SOCKET.emit('login', msg);
+                    this.addMsg(msg, 'LOGIN');
+                    this.user.isLogin = true;
+                },
+                send: function () {
+                    var message = this.message;
+                    if (!(message && this.user.name)) return;
+                    var msg = { id: this.user.id, name: this.user.name, message: message };
+                    this.SOCKET.emit('message', msg);
+                    this.addMsg(msg, 'MESSAGE');
+                    this.message = '';
+                },
+                logout: function () {
+                    if (!this.user.isLogin) return;
+                    var msg = this.user;
+                    this.SOCKET.emit('logout', msg);
+                    this.SOCKET.disconnect();
+                    this.addMsg(msg, 'LOGOUT');
+                    this.user.isLogin = false;
+                    this.message = '';
+                },
+                addMsg: function(msgObj, type) {
+                    var _self = this;
+                    msgObj.type = type;
+                    this.messages.push(msgObj);
+                    this.$nextTick(function() {
+                        _self.$refs.msgBox.scrollTo(0, _self.$refs.msgBox.scrollHeight);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
