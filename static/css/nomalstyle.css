@@ -1,0 +1,32 @@
+html, body {
+    font-family: 'PingFangSC-Regular', 'Microsoft YaHei UI', 'Microsoft Yahei', 'Hiragino Sans GB';
+    font-weight: 100;
+    font-size: 16px;
+    color: #333333;
+}
+div {
+  box-sizing: border-box;
+}
+ul, li {
+    list-style: none;
+}
+
+input, textarea, select, button {
+    font-family: 'PingFangSC-Light', 'Microsoft YaHei UI Light', 'Microsoft Yahei Light', 'Hiragino Sans GB';
+    font-weight: 100;
+    color: #333333;
+    transition: box-shadow .3s;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 8px;
+    line-height: 21px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+button {
+    padding: 8px 16px;
+}
+button:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 15px 0 #ddd;
+}
