@@ -1,1 +1,12 @@
-<iframe width="560" height="315" src="./readme/talkchat.mp4" frameborder="0" allowfullscreen></iframe>
+## 利用socket.io实现的聊天室
+
+### 功能概述
+- 输入用户名进入聊天室，服务端广播用户加入通知，客户端输出提示
+- 输入消息后发送消息，服务端广播消息，客户端显示消息人以及消息
+- 离开聊天室，服务端广播用户离开通知，客户端提示
+
+![preview](./readme/talkchat_0-411)
+
+### TODO
+- 进入聊天室后，可以通过http请求获取在线用户
+- 用户进入或离开时更新在线用户列表
