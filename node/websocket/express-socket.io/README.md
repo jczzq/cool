@@ -5,7 +5,7 @@
 - 输入消息后发送消息，服务端广播消息，客户端显示消息人以及消息
 - 离开聊天室，服务端广播用户离开通知，客户端提示
 
-![preview](./readme/talkchat_0-411)
+![preview](./readme/talkchat_0-411.gif)
 
 ### TODO
 - 进入聊天室后，可以通过http请求获取在线用户
