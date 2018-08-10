@@ -1,10 +1,10 @@
 {
-  "name": "node-demo",
+  "name": "cool-pages",
   "version": "1.0.0",
   "description": "node demos. websocket, webpack...",
   "main": "app.js",
   "scripts": {
-    "express-socket.io": "nodemon ./websocket/express-socket.io/index"
+    "express-socket.io": "nodemon ./node/websocket/express-socket.io/index"
   },
   "keywords": [
     "websocket",

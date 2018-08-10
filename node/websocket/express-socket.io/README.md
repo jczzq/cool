@@ -7,6 +7,9 @@
 
 ![preview](./readme/talkchat_0-411.gif)
 
-### TODO
 - 进入聊天室后，可以通过http请求获取在线用户
 - 用户进入或离开时更新在线用户列表
+- storage存储用户在线信息
+
+### TODO
+
