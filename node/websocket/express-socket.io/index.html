@@ -11,15 +11,37 @@
         body {
             font-size: 16px;
         }
-        .name {
-            font-weight: bold;
+        #app {
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        .box {
+            font-size: 0;
+        }
+        .users {
+            font-size: 16px;
+            margin-right: 16px;
+            display: inline-block;
+            vertical-align: top;
+            border: 1px solid #ddd;
+            width: 200px;
+            height: 400px;
+            border-radius: 4px;
+            overflow-y: auto;
         }
         .msg-box {
+            font-size: 16px;
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 216px);
             transition: .5s height;
             border: 1px solid #ddd;
             border-radius: 4px;
             height: 400px;
             overflow-y: auto;
+        }
+        .name {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -30,20 +52,25 @@
             <input type="text" placeholder="输入用户名" @keyup.enter="login" :disabled="user.isLogin" v-model="user.name" class="m-r-4">
             <button :disabled="user.isLogin" @click="login()">进入聊天室</button>
         </div>
-        <ul class="msg-box p-4 m-b-4" ref="msgBox">
-            <li v-for="item in messages" class="m-b-3">
-                <p v-if="item.type === 'LOGIN'" class="text-center color-placeholder">
-                    <span class="name">{{ item.name }}</span>进入聊天室
-                </p>
-                <p v-if="item.type === 'LOGOUT'" class="text-center color-placeholder">
-                    <span class="name">{{ item.name }}</span>离开聊天室
-                </p>
-                <p v-if="item.type === 'MESSAGE'">
-                    <span class="name">{{ item.name }}</span>：
-                    {{ item.message }}
-                </p>
-            </li>
-        </ul>
+        <div class="box">
+            <ul class="users">
+                <li v-for="item in users" :key="item.id">{{ item.name }}</li>
+            </ul>
+            <ul class="msg-box p-4 m-b-4" ref="msgBox">
+                <li v-for="item in messages" :key="item.id" class="m-b-3">
+                    <p v-if="item.type === 'LOGIN'" class="text-center color-placeholder">
+                        <span class="name">{{ item.name }}</span>进入聊天室
+                    </p>
+                    <p v-else-if="item.type === 'LOGOUT'" class="text-center color-placeholder">
+                        <span class="name">{{ item.name }}</span>离开聊天室
+                    </p>
+                    <p v-else="item.type === 'MESSAGE'">
+                        <span class="name">{{ item.name }}</span>：
+                        {{ item.message }}
+                    </p>
+                </li>
+            </ul>
+        </div>
         <div class="m-b-4" v-if="user.isLogin">
             <input type="text" v-model="message" @keyup.enter="send()" class="m-r-4">
             <button @click="send()" class="m-r-4">发送消息</button>
@@ -52,7 +79,7 @@
     </main>
     <script src="/js/vue.min.2.5.15.js"></script>
     <script>
-        Vue.devtool = true;
+        Vue.config.devtools = true
         new Vue({
             el: '#app',
             data: {
@@ -67,9 +94,28 @@
                 messages: []
             },
             mounted() {
-
+                var user = localStorage.es_user ? JSON.parse(localStorage.es_user) : null;
+                if (user && user.id) {
+                    this.user.id = user.id;
+                    this.user.name = user.name;
+                    this.user.isLogin = true;
+                    this.login();
+                }
+                this.loadUsers();
             },
             methods: {
+                loadUsers: function() {
+                    var _self = this;
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', '/express-eoxket.io/users', true);
+                    xhr.responseType = 'json';
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            _self.users = xhr.response;
+                        }
+                    };
+                    xhr.send();
+                },
                 login: function () {
                     var _self = this;
                     if (!this.user.name) return;
@@ -77,22 +123,30 @@
                     this.SOCKET = io.connect('http://localhost:3000');
                     // 进入聊天室
                     this.SOCKET.on('login', function (msg) {
+                        console.log('进入聊天室', msg);
+                        _self.users.push(msg);
                         _self.addMsg(msg, 'LOGIN');
                     });
                     // 离开聊天室
                     this.SOCKET.on('logout', function (msg) {
                         console.log('离开聊天室', msg);
+                        _self.users = _self.users.filter(x => x.id !== msg.id);
+                        if (_self.user && _self.user.id === msg.id) {
+                            _self.logout();
+                        }
                         _self.addMsg(msg, 'LOGOUT');
                     });
                     // 获取消息
                     this.SOCKET.on('message', function (msg) {
-                        console.log('获取消息', msg);
+                        // console.log('获取消息', msg);
                         _self.addMsg(msg, 'MESSAGE');
                     });
                     const msg = { id: this.user.id, name: this.user.name };
                     this.SOCKET.emit('login', msg);
                     this.addMsg(msg, 'LOGIN');
+                    this.users.push(this.user);
                     this.user.isLogin = true;
+                    localStorage.es_user = JSON.stringify(msg);
                 },
                 send: function () {
                     var message = this.message;
@@ -109,7 +163,14 @@
                     this.SOCKET.disconnect();
                     this.addMsg(msg, 'LOGOUT');
                     this.user.isLogin = false;
+                    localStorage.removeItem('es_user');
+                    this.users = this.users.filter(x => x.id !== msg.id);
                     this.message = '';
+                    this.user = {
+                        isLogin: false,
+                        id: Date.now(),
+                        name: null
+                    };
                 },
                 addMsg: function(msgObj, type) {
                     var _self = this;

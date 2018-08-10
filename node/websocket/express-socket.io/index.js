@@ -11,30 +11,28 @@ app.get('/', function (req, res) {
 	res.sendFile(path.join(__dirname, './index.html'));
 });
 
-// 设置静态文件目录
-app.use(express.static(path.join(__dirname, '../../static')));
-
-app.get('/login', function (req, res) {
-	var username = req.query.username;
-	if (WS) WS.send(JSON.stringify(username));
-	WS.broadcast.emit('loginIn', username);
-	res.send(req.query || {});
-});
-
-let store = {
+const store = {
 	users: []
 };
+
+// 设置静态文件目录
+app.use(express.static(path.join(__dirname, '../../../static')));
+
+app.get('/express-eoxket.io/users', function (req, res) {
+	res.send(store.users);
+});
 
 io.on('connection', function (socket) {
 	WS = socket;
 	// 进入聊天室
 	socket.on('login', function (msg) {
-		let userId = msg.id;
-		if (userId && !store.users.map(x => x.id).includes(userId)) {
-			socket.broadcast.emit('login', msg);
-			store.users.push(msg);
+		let { id, name } = msg;
+		if (id && !store.users.map(x => x.id).includes(id)) {
+			let user = { id, name };
+			store.users.push(user);
 			// console.log(msg.name + ' 进入聊天室');
 		}
+		socket.broadcast.emit('login', msg);
 	});
 	// 离开聊天室
 	socket.on('logout', function (msg) {
