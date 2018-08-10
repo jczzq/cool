@@ -1,15 +1,15 @@
-# cool
-all of cool-html !!
+# Cool Pages
+some web pages what I think are cool. 
+www.jczzq.com
 
-# jczzq.com
+## get start
+if you want to run these pages you may
+`npm i live-server` and `live-server`
 
-## 文件结构
-```
-├── src 资源目录
-├──── index.js 程序入口
-├── robots.txt 站点爬虫协议
-├── README.md
-└── index.html 首页
-```
+If you want to run the node program, you should
+`npm i -g nodemon` and `npm run express-socket.io`
+
+
+## Disallow Crawler
 > [robots.txt 爬虫协议](https://baike.baidu.com/item/robots%E5%8D%8F%E8%AE%AE/2483797?fromtitle=robots.txt&fromid=9518761)
 
