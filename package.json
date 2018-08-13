@@ -13,9 +13,16 @@
   "author": "jczzq",
   "license": "ISC",
   "dependencies": {
+    "css-loader": "^1.0.0",
     "express": "^4.16.3",
     "socket.io": "^2.1.1",
-    "webpack": "^4.15.1",
+    "style-loader": "^0.22.1",
+    "to-string-loader": "^1.1.5",
     "ws": "^6.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.4"
   }
 }
