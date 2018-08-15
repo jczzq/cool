@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo_1 - webGL</title>
+    <script id="vs" type="x-shader/x-vertex">
+        attribute vec3 position;
+        uniform   mat4 mvpMatrix;
+         
+        void main(void){
+            gl_Position = mvpMatrix * vec4(position, 1.0);
+        }
+    </script>
+
+    <script id="fs" type="x-shader/x-fragment">
+        void main(void){
+            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+    </script>
+</head>
+
+<body onload="windowLoaded()">
+    <canvas id="canvas"></canvas>
+
+    <script type="x-shader/x_vertex">
+        #attribute vec3 position;
+        #void main(void) {
+        #    gl_Position = position;
+        #}
+
+        
+        attribute vec4 position;
+        attribute vec4 color;
+        uniform mat4 mvpMatrix;
+        varying vec4 vColor
+        
+        void main(void) {
+            vColor = color;
+            gl_Position = mvpMatrix * position;
+        }
+    </script>
+    <script>
+        var windowLoaded = function () {
+            var c = document.getElementById('canvas');
+            c.width = 500;
+            c.height = 300;
+            // WebGLRenderingContext 实例
+            var gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+            // console.log(gl.COLOR_BUFFER_BIT);
+            // 重置画布
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+
+            // GLSL（OpenGL Shading Language）
+
+        };
+    </script>
+</body>
+
+</html>
