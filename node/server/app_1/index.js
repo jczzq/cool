@@ -17,7 +17,7 @@ app.use('/user', (req, res, next) => {
     //     params: req.params,
     //     body: req.body
     // });
-    return res.send(200);
+    return res.sendStatus(200);
 });
 
 app.listen(3000, '0.0.0.0', () => {
