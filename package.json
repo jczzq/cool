@@ -4,7 +4,8 @@
   "description": "node demos. websocket, webpack...",
   "main": "app.js",
   "scripts": {
-    "express-socket.io": "nodemon ./node/websocket/express-socket.io/index"
+    "express-socket.io": "nodemon ./node/websocket/express-socket.io/index",
+    "app1": "nodemon ./node/server/app_1/index"
   },
   "keywords": [
     "websocket",

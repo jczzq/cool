@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>通过 body-parser 与 multer 深入了解http请求</title>
+    <link rel="stylesheet/less" type="text/css" href="/css/main.less">
+    <link rel="stylesheet/less" type="text/css" href="/css/nomalstyle.less">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+    <style>
+        body {
+            font-size: 14px;
+        }
+        #app {}
+    </style>
+</head>
+
+<body>
+    <main id="app" class="p-4">
+        <div class="m-b-5" v-for="form in FORMS" :key="form.id">
+            <form :action="form.action"
+                :method="form.method"
+                :enctype="form.enctype">
+                <fieldset>
+                    <legend>
+                        {{ form.name }} | action="{{ form.action }}" | method="{{ form.method }}" | enctype="{{ form.enctype }}"
+                    </legend>
+                    <p>
+                        <label for="name"> action: </label>
+                        <input type="text" name="action" v-model="form.action" placeholder="aciton">
+                    </p>
+                    <p>
+                        <label for="name"> name: </label>
+                        <input type="text" name="name" v-model="form.name" placeholder="name">
+                    </p>
+                    <p>
+                        <label for="method"> method: </label>
+                        <select name="method" v-model="form.method">
+                            <option v-for="item in METHODS" :key="item" :value="item">{{item}}</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="enctype"> enctype： </label>
+                        <select name="enctype" v-model="form.enctype">
+                            <option v-for="item in ENCTYPES" :key="item" :value="item">{{item}}</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="avatar"> 头像： </label>
+                        <input type="file" name="avatar" placeholder="头像">
+                    </p>
+                </fieldset>
+                <p class="p-4 p-r-0 text-right">
+                    <input type="submit" value="提交">
+                </p>
+            </form>
+        </div>
+    </main>
+    <script src="/js/vue.min.2.5.15.js"></script>
+    <script>
+        Vue.config.devtools = true;
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                ENCTYPES: [
+                    '',
+                    'application/x-www-form-urlencoded',
+                    'multipart/form-data',
+                    'text/plain'
+                ],
+                METHODS: [
+                    '',
+                    'POST',
+                    'GET'
+                ],
+                FORMS: [
+                    {
+                        id: 'postForm',
+                        action: '/user',
+                        name: '请求表单',
+                        method: '',
+                        enctype: null
+                    }
+                ]
+            },
+            mounted() {
+            },
+            methods: {
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,7 +1,6 @@
 html, body {
     font-family: 'PingFangSC-Regular', 'Microsoft YaHei UI', 'Microsoft Yahei', 'Hiragino Sans GB';
     font-weight: 100;
-    font-size: 16px;
     color: #333333;
 }
 ul, div {
@@ -17,21 +16,32 @@ input, textarea, select, button {
     color: #333333;
     transition: box-shadow .3s;
     box-sizing: border-box;
-    font-size: 16px;
-    padding: 8px;
-    line-height: 21px;
+    padding: 4px 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+input[type='submit'],
+input[type='reset'],
+input[type='button'],
 button {
-    padding: 8px 16px;
+    padding: 4px 16px;
+    &:hover {
+        cursor: pointer;
+        box-shadow: 0 2px 15px 0 #ddd;
+    }
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+        box-shadow: none;
+    }
 }
-button:hover {
-    cursor: pointer;
-    box-shadow: 0 2px 15px 0 #ddd;
+
+select {
+    min-width: 150px;
 }
-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-    box-shadow: none;
+
+fieldset {
+    border-color: #DCDFE6;
+    border-width: 1px;
+    border-style: solid;
 }

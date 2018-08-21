@@ -16,7 +16,7 @@ const store = {
 };
 
 // 设置静态文件目录
-app.use(express.static(path.join(__dirname, '../../../static')));
+app.use(express.static(path.join(path.resolve(''), '/static')));
 
 app.get('/express-eoxket.io/users', function (req, res) {
 	res.send(store.users);
