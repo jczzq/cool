@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "express-socket.io": "nodemon ./node/websocket/express-socket.io/index",
-    "app1": "nodemon ./node/server/app_1/index"
+    "app1": "nodemon ./node/server/app_1/index",
+    "gulp": "node ./node_modules/gulp/bin/gulp -ws --gulpfile ./gulp/gulpfile.js"
   },
   "keywords": [
     "websocket",
@@ -23,8 +24,10 @@
     "ws": "^6.0.0"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "yargs": "^12.0.1"
   }
 }
