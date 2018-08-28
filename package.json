@@ -6,6 +6,7 @@
   "scripts": {
     "express-socket.io": "nodemon ./node/websocket/express-socket.io/index",
     "app1": "nodemon ./node/server/app_1/index",
+    "calcSL": "nodemon ./node/calcStringLength.js",
     "gulp": "node ./node_modules/gulp/bin/gulp -ws --gulpfile ./gulp/gulpfile.js"
   },
   "keywords": [
