@@ -1,67 +1,82 @@
-*{
-    margin: 0;
-    padding:0;
-    font-family: 'Microsoft Yahei';
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Microsoft Yahei";
 }
 a {
-    color: #666;
-    text-decoration: none;
+  color: #666;
+  text-decoration: none;
+}
+ul.main {
+  width: 100%;
+  margin: 0;
+}
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.clearfix {
+  *+height: 1%;
 }
 ul,
 li {
-    list-style: none;
+  list-style: none;
+  display: inline-block;
+  width: 47%;
+  margin-left: 2%;
+  margin-bottom: 2%;
 }
 .title {
-    padding: 16px;
-    font-size: 36px;
-    border-bottom: 3px solid #eee;
-}
-.main {
-    margin: 0 16px;
+  padding: 16px;
+  font-size: 36px;
+  border-bottom: 1px solid #eee;
 }
 .m-b {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-h4{
-    padding: 8px;
+h4 {
+  padding: 8px;
 }
 .hover:hover {
-    transition: box-shadow .3s ease-out;
-    border-color: ddd;
-    box-shadow: 0 0 24px 1px #ccc;
+  transition: box-shadow 0.3s ease-out;
+  border-color: #ddd;
+  box-shadow: 0 0 18px 3px #eee;
 }
 .bd-def {
-    border-radius: 4px;
-    border: 1px solid #eee;
+  border-radius: 4px;
+  border: 1px solid #eee;
 }
 .cover-wrapper {
-    cursor: pointer;
-    height: 300px;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+  cursor: pointer;
+  height: 300px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 footer.footer {
-    font-size: 14px;
-    padding: 16px 20px;
-    height: 200px;
-    background-color: #f5f5f5;
-    text-align: center;
-    color: #999;
+  font-size: 14px;
+  padding: 16px 20px;
+  height: 200px;
+  background-color: #f5f5f5;
+  text-align: center;
+  color: #999;
 }
 footer.footer i {
-    display: inline-block;
-    width: 14px;
-    height: 16px;
-    background: url(../imgs/icon-police.png) 0 0 no-repeat;
-    vertical-align: middle;
+  display: inline-block;
+  width: 14px;
+  height: 16px;
+  background: url(../imgs/icon-police.png) 0 0 no-repeat;
+  vertical-align: middle;
 }
 footer.footer p {
-    line-height: 32px;
+  line-height: 32px;
 }
 footer.footer a {
-    font-size: 14px;
-    color: #999;
+  font-size: 14px;
+  color: #999;
 }

@@ -11,9 +11,9 @@
 
 <body>
     <div id="app">
-        <h2 class="title m-b">cool html</h2>
-        <ul class="main">
-            <li class="m-b hover bd-def" v-for="page in PAGE_LIST">
+        <h2 class="title m-b">COOL HTML</h2>
+        <ul class="main clearfix">
+            <li class="hover bd-def" v-for="page in PAGE_LIST">
                 <p @click="location.href = page.url" class="cover-wrapper" :style="{ backgroundImage: `url(./assets/imgs/cover/${page.cover})`}"></p>
                 <h4>
                     <a :href="page.url">{{ page.name }}</a>

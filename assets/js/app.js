@@ -36,6 +36,11 @@ new Vue({
                 name: '气泡',
                 url: './pages/pop-wave/index.html',
                 cover: 'pop-wave.png'
+            },
+            {
+                name: '三维列表',
+                url: './pages/IsometricGrids/index.html',
+                cover: 'IsometricGrids.png'
             }
         ]
     }
