@@ -120,7 +120,7 @@
                     var _self = this;
                     if (!this.user.name) return;
                     document.title = `${this.user.name} - 聊天室`;
-                    this.SOCKET = io.connect('http://localhost:3000');
+                    this.SOCKET = io.connect(location.host);
                     // 进入聊天室
                     this.SOCKET.on('login', function (msg) {
                         console.log('进入聊天室', msg);
